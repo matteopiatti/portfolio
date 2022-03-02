@@ -20,17 +20,29 @@
 				var  dist = pathLen * scrollY / maxScrollY;
 				var  pos = path.getPointAtLength(dist);
 				// Calculate position a little ahead of the car (or behind if we are at the end), so we can calculate car angle
-				if (dist + 1 <= pathLen) {
-					var  posAhead = path.getPointAtLength(dist + 1);
-					var angle = Math.atan2(posAhead.y - pos.y, posAhead.x - pos.x);
+				var angle = calculateAngle(path, pathLen, dist, pos)
 
-				} else {
-					var  posBehind = path.getPointAtLength(dist - 1);
-					var angle = Math.atan2(pos.y - posBehind.y, pos.x - posBehind.x);
+				if (angle < 0) {
+					var  pathLen = path.getTotalLength();
+					var  dist = pathLen * scrollY / maxScrollY;
+					var  pos = path.getPointAtLength(dist);
+					var angle = calculateAngle(path, pathLen, dist, pos)
 				}
+				
 				// Position the car at "pos" totated by "angle" (if angle is upwards position further for more speed)
 				var  car = document.getElementById("c");
 				car.setAttribute("transform", "translate(" + (pos.x) + "," + (pos.y) + ") rotate(" + (rad2deg(angle) + 90) + ")");
+			}
+
+			function calculateAngle(path, pathLen, dist, pos) {
+				if (dist + 1 <= pathLen) {
+					var  posAhead = path.getPointAtLength(dist + 1);
+					return Math.atan2(posAhead.y - pos.y, posAhead.x - pos.x);
+
+				} else {
+					var  posBehind = path.getPointAtLength(dist - 1);
+					return Math.atan2(pos.y - posBehind.y, pos.x - posBehind.x);
+				}
 			}
 
 			function rad2deg(rad) {

@@ -5,7 +5,6 @@
 	onMount(() => {
 		j(document).ready(function(){
 			j('.this-is-the-scroll-element').scroll(function() {
-				console.log('lol')
 				positionCar();			
 			});
 
