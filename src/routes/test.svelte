@@ -1,10 +1,10 @@
 <script>
-	import * as j from 'jquery';
+	import jQuery from 'jquery';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		j(document).ready(function(){
-			j(document).scroll(function() {
+		jQuery(document).ready(function(){
+			jQuery(document).scroll(function() {
 				positionCar();			
 			});
 
@@ -12,8 +12,8 @@
 			positionCar();
 
 			function positionCar() {
-				var  scrollY = j('#route').scrollTop() || window.pageYOffset;
-				var  maxScrollY = j('#route').prop('scrollHeight');
+				var  scrollY = jQuery('#route').scrollTop() || window.pageYOffset;
+				var  maxScrollY = jQuery('#route').prop('scrollHeight');
 				var  path = document.getElementById("path");
 				// Calculate distance along the path the car should be for the current scroll amount
 				var  pathLen = path.getTotalLength();
@@ -28,7 +28,7 @@
 					var  pos = path.getPointAtLength(dist);
 					var angle = calculateAngle(path, pathLen, dist, pos)
 				}
-				
+
 				// Position the car at "pos" totated by "angle" (if angle is upwards position further for more speed)
 				var  car = document.getElementById("c");
 				car.setAttribute("transform", "translate(" + (pos.x) + "," + (pos.y) + ") rotate(" + (rad2deg(angle) + 90) + ")");
